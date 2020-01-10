@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'staff.apps.StaffConfig',
+    'result_checking_module.apps.ResultCheckingModuleConfig',
 ]
 
 MIDDLEWARE = [
