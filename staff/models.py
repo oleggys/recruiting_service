@@ -27,9 +27,17 @@ class Recruiter(models.Model):
         pass
 
 
+class Clan(models.Model):
+    name = models.CharField('Order`s name', max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
 class Sith(models.Model):
     name = models.CharField('Sith`s name', max_length=50)
     planet = models.ForeignKey(Planet, on_delete=models.CASCADE)
+    clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
 
     def __str__(self):
         return '{0} #{1}'.format(self.name, self.id)

@@ -1,14 +1,15 @@
 from django.db import models
 
 # Create your models here.
-from staff.models import Recruiter
+from staff.models import Recruiter, Clan
 
 
 class Test(models.Model):
-    order = models.IntegerField('Unique order number', unique=True)
+    name = models.CharField('Test title', max_length=100)
+    clan = models.OneToOneField(Clan, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.order)
+        return str(self.name)
 
 
 class Question(models.Model):

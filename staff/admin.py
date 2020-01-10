@@ -1,8 +1,10 @@
 from django.contrib import admin
-from staff.models import Planet, Recruiter, Sith
+from staff.models import Planet, Recruiter, Sith, Clan
+
 # Register your models here.
 
 admin.site.register(Planet)
+admin.site.register(Clan)
 
 
 @admin.register(Recruiter)
