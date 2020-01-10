@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Регистрация рекрутера
+{% endblock %}
+
+{% block content %}
+<div class="col-md-6 ml-auto mr-auto mt-4">
+    <h2>Регистрация</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_name">Имя</label>
+                    {{ recruiter_registration_form.name }}
+                </div>
+                <div class="form-group">
+                    <label for="id_birth_date">Дата рождения</label>
+                    {{ recruiter_registration_form.birth_date }}
+                </div>
+                <div class="form-group">
+                    <label for="id_email">Email</label>
+                    {{ recruiter_registration_form.email }}
+                </div>
+                <div class="form-group">
+                    <label for="id_planet">Планета</label>
+                    {{ recruiter_registration_form.planet }}
+                </div>
+                <button type="submit" class="btn btn-primary">Далее</button>
+
+            </form>
+        </div>
+        <div class="col-md-6">
+            {{ recruiter_registration_form.errors }}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

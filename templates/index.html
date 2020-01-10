@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Главная
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <a class="col-md-6 text-center vh-100" href="{% url 'sith_auth' %}">
+        <div class="align-middle mt-4">
+            Для ситхов
+        </div>
+    </a>
+    <a class="col-md-6 text-center vh-100" href="{% url 'recruiter_auth' %}">
+        <div class="align-middle mt-4">
+            Для рекрутов
+        </div>
+    </a>
+</div>
+{% endblock %}
