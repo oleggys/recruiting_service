@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load filters %}
+
+{% block title %}
+    Тест
+{% endblock %}
+
+{% block content %}
+    <form method="POST" class="col-md-7 m-auto text-center">
+        {% csrf_token %}
+        <h2 class="text-center">{{ test_title }}</h2>
+        <ul class="list-group ">
+            {% for question in questions %}
+                <li class="list-group-item">
+                    <h5>{{ question|get:'title' }}</h5>
+                    <div class="row">
+                        <p class="p-2">{{ question|get:'text' }}</p>
+                        <div class="p-2">
+                            {{ question|get:'answer_form' }}
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <button type="submit" class="btn btn-primary mt-2 ">Далее</button>
+    </form>
+{% endblock %}

@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from staff.forms import RecruiterForm
+from .forms import RecruiterForm
+from .models import Clan
 
 
 def index(request):
@@ -20,7 +21,8 @@ def recruiter_auth(request):
             user = form.save()
             request.session['user_id'] = user.id
             request.session['user_type'] = 'recruiter'
-            return redirect('index')
+            clan_id = Clan.objects.get(planet=user.planet).id
+            return redirect('test_for_recruiters', clan_id=clan_id)
         args['recruiter_registration_form'] = form
     if request.method == 'GET':
         args['recruiter_registration_form'] = RecruiterForm

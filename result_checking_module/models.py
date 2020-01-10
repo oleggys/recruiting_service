@@ -14,7 +14,7 @@ class Test(models.Model):
 
 class Question(models.Model):
     text = models.TextField('Text')
-    order = models.ForeignKey(Test, on_delete=models.CASCADE)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.text
