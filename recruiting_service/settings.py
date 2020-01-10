@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rectruiting_service.apps.RectruitingServiceConfig',
+    'staff.apps.StaffConfig',
 ]
 
 MIDDLEWARE = [
