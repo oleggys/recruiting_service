@@ -1,10 +1,14 @@
 from django.contrib import admin
-from staff.models import Planet, Recruiter, Sith, Clan
+from staff.models import Planet, Recruiter, Sith, Clan, DarkHand
 
 # Register your models here.
 
 admin.site.register(Planet)
 admin.site.register(Clan)
+
+
+class DarkHandAdminModel(admin.TabularInline):
+    model = DarkHand
 
 
 @admin.register(Recruiter)
@@ -20,6 +24,9 @@ class RecruiterAdminModel(admin.ModelAdmin):
 class SithAdminModel(admin.ModelAdmin):
     list_display = ('name', 'get_planet_name')
     search_fields = ('name', 'get_planet_name')
+    inlines = [
+        DarkHandAdminModel,
+    ]
 
     def get_planet_name(self, obj):
-        return obj.planet.name
+        return obj.clan.planet.name

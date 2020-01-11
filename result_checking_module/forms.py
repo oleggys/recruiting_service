@@ -18,3 +18,5 @@ class RecruiterAnswerForm(forms.Form):
 
     class Meta:
         fields = ('answer',)
+
+

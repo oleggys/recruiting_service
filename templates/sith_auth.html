@@ -5,5 +5,12 @@
 {% endblock %}
 
 {% block content %}
-
+    <div class="col-md-6 mt-4 m-auto text-center">
+        <form method="POST">
+            {% csrf_token %}
+            <label for="id_siths_select"></label>
+            {{ choice_sith_form.siths_select }}
+            <button type="submit" class="btn btn-primary mt-2">Далее</button>
+        </form>
+    </div>
 {% endblock %}

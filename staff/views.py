@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from .forms import RecruiterForm
+from .forms import RecruiterForm, SithForm
 from .models import Clan
 
 
@@ -10,7 +10,16 @@ def index(request):
 
 
 def sith_auth(request):
-    return render(request, template_name='sith_auth.html')
+    args = {}
+    if request.method == 'POST':
+        form = SithForm(request.POST)
+        if form.is_valid():
+            request.session['user_id'] = form.data.get('siths_select')
+            return redirect('recruiters_for_sith')
+        args['choice_sith_form'] = form
+    if request.method == 'GET':
+        args['choice_sith_form'] = SithForm()
+    return render(request, template_name='sith_auth.html', context=args)
 
 
 def recruiter_auth(request):

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load filters %}
+
+{% block title %}
+    Ответы на тест рекрута
+{% endblock %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <div class="col-md-6 mt-2 ml-auto mr-auto">
+            <ul class="list-group">
+                {% for answer in answers %}
+                    <li class="list-group-item ">
+                        <div class="float-left">
+                            <h5>{{ answer.question.text }}</h5>
+                            <h6>{{ answer.answer }}</h6>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="mt-2">
+                <a  href="{% url 'recruiters_for_sith' %}"
+                        class="btn btn-default float-left">Отмена</a>
+                <button type="submit" class="btn btn-primary text-white float-right">Принять рукой тьмы</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

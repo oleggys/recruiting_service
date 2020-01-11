@@ -41,3 +41,8 @@ class Sith(models.Model):
 
     def __str__(self):
         return '{0} #{1}'.format(self.name, self.id)
+
+
+class DarkHand(models.Model):
+    sith = models.ForeignKey(Sith, on_delete=models.CASCADE)
+    recruiter = models.OneToOneField(Recruiter, on_delete=models.CASCADE)

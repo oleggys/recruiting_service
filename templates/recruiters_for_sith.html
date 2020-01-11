@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Рекруты и их ответы
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-6 mt-2 ml-auto mr-auto">
+        <ul class="list-group">
+            {% for recruiter in recruiters %}
+                <li class="list-group-item ">
+                    <div class="float-left">
+                        <h5>{{ recruiter.name }}</h5>
+                        <h6>{{ recruiter.email }}</h6>
+                    </div>
+                    <a  href="{% url 'user_answers' recruiter.id %}"
+                        class="btn btn-primary text-white float-right">Посмотреть ответы</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
