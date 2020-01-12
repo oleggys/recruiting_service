@@ -16,7 +16,7 @@ class Planet(models.Model):
 class Recruiter(models.Model):
     name = models.CharField('Recruiter`s name', max_length=50)
     birth_date = models.DateField('Birth date')
-    email = models.EmailField('Email')
+    email = models.EmailField('Email', unique=True)
     planet = models.ForeignKey(Planet, on_delete=models.CASCADE)
 
     def get_age(self):

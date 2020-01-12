@@ -5,14 +5,20 @@ from django.shortcuts import render, redirect
 from staff.decorators import only_for
 from .forms import RecruiterAnswerForm
 from staff.models import Clan, Recruiter, Sith, DarkHand
-from .models import Question, Test, RecruiterAnswer
+from .models import Question, Test, RecruiterAnswer, EndTestRecruiter
+
 
 @only_for('recruiter', redirect_url='index')
 def test_for_recruiters(request, clan_id):
     args = {}
-    clan = Clan.objects.get(id=clan_id)
+    try:
+        clan = Clan.objects.get(id=clan_id)
+    except Clan.DoesNotExist:
+        return render(request, template_name='errors/clan_does_not_exist.html')
     user_id = request.session['user_id']
     recruiter = Recruiter.objects.get(id=user_id)
+    if EndTestRecruiter.objects.filter(recruiter=recruiter).exists():
+        return redirect('thanks')
     test_obj = Test.objects.get(clan=clan)
     questions = Question.objects.filter(test=test_obj)
     form_questions = []
@@ -29,6 +35,7 @@ def test_for_recruiters(request, clan_id):
         if answers_count == len(questions):
             for i in range(len(questions)):
                 RecruiterAnswer(recruiter=recruiter, question=questions[i], answer=answers[i]).save()
+            EndTestRecruiter(recruiter=recruiter, test=test_obj).save()
             return redirect('thanks')
     if request.method == 'GET' or answers_count != len(questions):
         # user_type = request.session['user_type']
@@ -46,6 +53,7 @@ def test_for_recruiters(request, clan_id):
     args['questions'] = form_questions
     return render(request, template_name='test_for_recruiter.html', context=args)
 
+
 @only_for('recruiter', redirect_url='index')
 def thanks_view(request):
     return render(request, 'thanks.html')
@@ -60,7 +68,7 @@ def recruiters_for_sith(request):
     recruiters_which_have_answer = []
     recruiters = Recruiter.objects.filter(planet__clan=sith.clan).exclude(id__in=dark_hand_users)
     for recruiter in recruiters:
-        if RecruiterAnswer.objects.filter(recruiter=recruiter).exists():
+        if EndTestRecruiter.objects.filter(recruiter=recruiter).exists():
             recruiters_which_have_answer.append(recruiter)
     args['sith'] = sith
     args['dark_hands'] = DarkHand.objects.filter(sith=sith)

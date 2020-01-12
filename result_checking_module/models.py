@@ -24,3 +24,8 @@ class RecruiterAnswer(models.Model):
     recruiter = models.ForeignKey(Recruiter, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.BooleanField('Answer')
+
+
+class EndTestRecruiter(models.Model):
+    recruiter = models.OneToOneField(Recruiter, on_delete=models.CASCADE)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
