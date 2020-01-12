@@ -15,7 +15,8 @@ import environ
 
 env = environ.Env(
     DEBUG=(bool, False),
-    IS_RELEASE=(bool, False)
+    IS_RELEASE=(bool, False),
+    EMAIL_USE_TLS=(bool, False)
 )
 environ.Env.read_env()
 
@@ -101,6 +102,11 @@ else:
         }
     }
 
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = env('EMAIL_USE_SSL')
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 

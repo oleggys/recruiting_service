@@ -1,6 +1,9 @@
+from django.core.mail import EmailMessage, send_mail
 from django.db import models
+from django.template.loader import get_template
 from django.utils import timezone
 # Create your models here.
+from recruiting_service import settings
 
 
 class Planet(models.Model):
@@ -23,8 +26,12 @@ class Recruiter(models.Model):
     def __str__(self):
         return self.email
 
-    def send_notification(self):
-        pass
+    def send_notification(self, subject, template_name, context=None):
+        from_email, to = settings.EMAIL_HOST_USER, self.email
+        html_content = get_template(template_name=template_name).render(context)
+        msg = EmailMessage(subject, html_content, from_email, [to])
+        msg.content_subtype = 'html'
+        msg.send()
 
 
 class Clan(models.Model):
@@ -41,6 +48,9 @@ class Sith(models.Model):
 
     def __str__(self):
         return '{0} #{1}'.format(self.name, self.id)
+
+    def count_of_dark_hand(self):
+        return len(DarkHand.objects.filter(sith=self))
 
 
 class DarkHand(models.Model):

@@ -64,6 +64,8 @@ def recruiters_for_sith(request):
     for recruiter in recruiters:
         if RecruiterAnswer.objects.filter(recruiter=recruiter).exists():
             recruiters_which_have_answer.append(recruiter)
+    args['sith'] = sith
+    args['dark_hands'] = DarkHand.objects.filter(sith=sith)
     args['recruiters'] = recruiters_which_have_answer
     return render(request, template_name='recruiters_for_sith.html', context=args)
 
@@ -75,7 +77,10 @@ def check_user_answers(request, recruiter_id):
             sith = Sith.objects.get(id=request.session['user_id'])
             rec = Recruiter.objects.get(id=recruiter_id)
             DarkHand(sith=sith, recruiter=rec).save()
-            rec.send_notification('')
+            email_context = {'recruiter_name': rec.name, 'sith_name': sith.name}
+            rec.send_notification(subject='Результаты теста',
+                                  template_name='email_templates/add_to_dark_hand_notification.html',
+                                  context=email_context)
             return redirect('recruiters_for_sith')
         except IntegrityError:
             return redirect('recruiters_for_sith')
