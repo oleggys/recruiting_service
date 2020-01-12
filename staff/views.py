@@ -15,6 +15,7 @@ def sith_auth(request):
         form = SithForm(request.POST)
         if form.is_valid():
             request.session['user_id'] = form.data.get('siths_select')
+            request.session['user_type'] = 'sith'
             return redirect('recruiters_for_sith')
         args['choice_sith_form'] = form
     if request.method == 'GET':

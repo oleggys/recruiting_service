@@ -2,15 +2,12 @@ from django.db import IntegrityError
 from django.shortcuts import render, redirect
 
 # Create your views here.
+from staff.decorators import only_for
 from .forms import RecruiterAnswerForm
 from staff.models import Clan, Recruiter, Sith, DarkHand
 from .models import Question, Test, RecruiterAnswer
 
-
-def get_questions_dict():
-    pass
-
-
+@only_for('recruiter', redirect_url='index')
 def test_for_recruiters(request, clan_id):
     args = {}
     clan = Clan.objects.get(id=clan_id)
@@ -49,11 +46,12 @@ def test_for_recruiters(request, clan_id):
     args['questions'] = form_questions
     return render(request, template_name='test_for_recruiter.html', context=args)
 
-
+@only_for('recruiter', redirect_url='index')
 def thanks_view(request):
     return render(request, 'thanks.html')
 
 
+@only_for('sith', redirect_url='index')
 def recruiters_for_sith(request):
     args = {}
     sith_id = request.session['user_id']
@@ -70,6 +68,7 @@ def recruiters_for_sith(request):
     return render(request, template_name='recruiters_for_sith.html', context=args)
 
 
+@only_for('sith', redirect_url='index')
 def check_user_answers(request, recruiter_id):
     args = {}
     if request.method == 'POST':
